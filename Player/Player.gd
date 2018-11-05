@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-slave var slave_position = Vector2()
-slave var slave_movement = Vector2()
+puppet var slave_position = Vector2()
+puppet var slave_movement = Vector2()
 
 var movement = Vector2()
 var speed = 200

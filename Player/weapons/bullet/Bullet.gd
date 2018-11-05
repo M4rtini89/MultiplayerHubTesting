@@ -4,20 +4,13 @@ export(float) var SPEED = 100
 export(float) var DAMAGE = 15
 
 var direction = Vector2()
-slave var slave_position = Vector2()
+puppet var slave_position = Vector2()
 
 func _ready():
     set_as_toplevel(true)
 
 func _process(delta):
-    if is_network_master():
-        rset_unreliable("slave_position", position) 
-    else:
-        position = slave_position
-    
     position += direction * SPEED * delta
-    if not is_network_master():
-        slave_position = position # To avoid jitter
 
 func _on_body_entered(body):
     if body.is_a_parent_of(self):
