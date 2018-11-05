@@ -63,10 +63,8 @@ func _client_received():
     var json = parse_json(data)
     match json.event:
         "message":
-            print("We got a message")
             print("Received message: %s" % [json.data.message])
         "getGameLobbyList":
-            print("we got a list of games")
             game_list = json.data
             process_game_list(game_list)
 #            emit_signal("got_game_list", game_list)

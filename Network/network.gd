@@ -58,6 +58,7 @@ func _player_connected(id):
 
 
 func start_server(port):
+    print("starting server at port: %s" % port)
     var peer = null
     var error = null
     if Global.USE_ENET:
@@ -68,9 +69,11 @@ func start_server(port):
         error = peer.listen(port, PoolStringArray(), true)
     multiplayer.set_network_peer(peer)
     
-    print("server started: %s" % error)
+    if error != OK:
+        print("Problem starting server: %s" % error)
 
 func start_client(host, port, start_local=false):
+    print("starting client and connecting to: %s:%s" % [host, port])
     var peer = null
     if Global.USE_ENET:
         peer = NetworkedMultiplayerENet.new()
@@ -82,7 +85,7 @@ func start_client(host, port, start_local=false):
 
 
 func _on_LobbyUI_join_server(ip, port):
-    start_client("127.0.0.1", Global.SERVER_PORT) 
+    start_client(ip, Global.SERVER_PORT) 
 
 
 func _on_LobbyUI_host_server(port):

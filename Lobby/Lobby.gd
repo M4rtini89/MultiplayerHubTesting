@@ -101,11 +101,10 @@ func send_local_player_info(name):
 
 
 func _on_player_connected(id):
-    print("lobby: player connected %s" %id)
     if not multiplayer.is_network_server() or id == 1:
         return
-#    connected_players[id] = {'name': '..connecting..'}
-    print("Sending info to new player")
+    print("lobby: player connected %s" %id)
+    # Sending info to new player
     for i in connected_players.size():
         var this_player = connected_players.get(i)
         rpc_id(id, "_update_player", this_player.id, this_player)
@@ -117,7 +116,7 @@ func _on_player_disconnected(id):
 
 
 func _on_register_player(id, player_info):
-    print("lobby: player register")
+    # print("lobby: player register")
     rpc("_update_player", id, player_info)
 
 
@@ -137,13 +136,13 @@ func update_view():
     for i in range(connected_players.size()):
         player_list.add_item(connected_players.get(i).name)
 
+
 sync func _remove_player(id):
     var res = connected_players.remove(id)
-    if res == OK:
-        print("removed player from connected_players")
+    if res != OK:
+        print("Problem removing player from connected_players!")
     update_view()
     
-
 
 func _on_startGameButton_pressed():
     rpc("start_game")
@@ -152,7 +151,6 @@ func _on_startGameButton_pressed():
 sync func start_game():
     self.visible = false
     emit_signal("start_game", connected_players.players)
-
 
 
 func _on_ItemList_item_activated(index):

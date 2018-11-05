@@ -29,10 +29,8 @@ func get_external_address():
 func get_internal_address():
     upnp.discover()
     var gateway : UPNPDevice = upnp.get_gateway()
-    print(gateway.igd_our_addr)
     return gateway.igd_our_addr
 
 
 func _exit_tree():
     upnp.delete_port_mapping(listen_port)
-    print("removed port mapping")
