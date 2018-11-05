@@ -42,7 +42,7 @@ func crate_game_host(gameName, port):
     gameName = "MyMultiplayer (host: %s)" %gameName
     port_open.do_port_forward(port)
     _client.get_peer(1).set_write_mode(_write_mode)
-    var data = to_json({'event': 'createGameLobby', 'data': {'port': port, 'local_ip': IP.get_local_addresses()[0], 'name': gameName}})
+    var data = to_json({'event': 'createGameLobby', 'data': {'port': port, 'local_ip': port_open.get_internal_address(), 'name': gameName}})
     _client.get_peer(1).put_packet(encode_data(data, _write_mode))
 
 
